@@ -480,14 +480,58 @@
   </div>
 </footer>
 
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // Placeholder buy-button wiring — see chat reply for how to connect real payment links.
-  document.querySelectorAll('[data-buy]').forEach(function (el) {
+  // ==== Razorpay UPI checkout (client-side, no backend needed) ====
+  // SECURITY: only the public Key ID goes here. NEVER put your Key Secret in this file.
+  var RAZORPAY_KEY_ID = "rzp_test_TdvVm7pM3ffs9i"; // TODO: replace with your LIVE key once Razorpay activation is complete
+
+  var EBOOKS = {
+    "upi-1": { name: "Mahaganapathi Pancharatnam", amount: 3900,  drive: "PASTE_GOOGLE_DRIVE_LINK_HERE_1" },
+    "upi-2": { name: "Kalabhairavastakam",          amount: 3900,  drive: "PASTE_GOOGLE_DRIVE_LINK_HERE_2" },
+    "upi-3": { name: "Prahlada Charitra",           amount: 9900,  drive: "PASTE_GOOGLE_DRIVE_LINK_HERE_3" },
+    "upi-4": { name: "Neem Karoli Baba Maharaj Ji", amount: 9900,  drive: "PASTE_GOOGLE_DRIVE_LINK_HERE_4" }
+  };
+
+  document.querySelectorAll('[data-buy^="upi-"]').forEach(function (el) {
     el.addEventListener('click', function (e) {
       e.preventDefault();
-      alert('Payment link not yet connected for this button (' + el.getAttribute('data-buy') + '). Replace the href in the HTML with your real Razorpay Payment Page or PayPal.me link.');
+      var book = EBOOKS[el.getAttribute('data-buy')];
+      if (!book) return;
+      var options = {
+        key: RAZORPAY_KEY_ID,
+        amount: book.amount,          // amount in paise
+        currency: "INR",
+        name: "AI4Moksha",
+        description: book.name,
+        handler: function (response) {
+          // Payment succeeded — hand over the download link
+          alert("Payment successful! Opening your download link for \"" + book.name + "\".");
+          window.open(book.drive, "_blank");
+        },
+        modal: {
+          ondismiss: function () {
+            console.log("Checkout closed without completing payment.");
+          }
+        },
+        theme: { color: "#7A1F2B" }
+      };
+      var rzp = new Razorpay(options);
+      rzp.on('payment.failed', function (response) {
+        alert("Payment failed. Please try again or use a different payment method.");
+      });
+      rzp.open();
+    });
+  });
+
+  // USD/card buttons — still placeholder until a PayPal link is connected
+  document.querySelectorAll('[data-buy^="usd-"]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      alert('USD payment link not yet connected for this button (' + el.getAttribute('data-buy') + '). This will be wired to PayPal.');
     });
   });
 </script>
