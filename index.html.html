@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI4Moksha — Hindu Scripture eBooks, Translated for Clarity</title>
+<meta name="description" content="AI4Moksha publishes clear, accessible translations of Hindu scriptures, stotras and stutis — Mahaganapathi Pancharatnam, Kalabhairavastakam, Prahlada Charitra, Neem Karoli Baba Maharaj Ji and more. Instant digital download, pay by UPI or card.">
+<meta name="keywords" content="Hindu scripture ebooks, Sanskrit stotram translation, Mahaganapathi Pancharatnam meaning, Kalabhairavastakam translation, Prahlada Charitra, Neem Karoli Baba Maharaj Ji, moksha ebooks, Vedic texts English translation, AI4Moksha">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI4Moksha — Hindu Scripture eBooks, Translated for Clarity">
+<meta property="og:description" content="Ancient wisdom, modern language. Translated Hindu scriptures as instant-download eBooks.">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "AI4Moksha",
+  "description": "Publisher of AI-assisted translations of Hindu scriptures, stotras and stutis as digital eBooks.",
+  "url": "https://example.com/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What format are the eBooks delivered in?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Every title is delivered as an instant-download PDF, formatted for both phone and desktop reading, immediately after payment is confirmed." }
+    },
+    {
+      "@type": "Question",
+      "name": "Which payment methods are accepted?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Buyers in India can pay via UPI, netbanking or Indian cards. International buyers can pay by card or PayPal in USD." }
+    },
+    {
+      "@type": "Question",
+      "name": "How are the translations made?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Each translation begins with an AI-assisted first pass against the original Sanskrit or Telugu source, then is reviewed for meaning and readability before publishing." }
+    }
+  ]
+}
+</script>
+<style>
+  :root {
+    --ink: #241F1C;
+    --ink-soft: #55493F;
+    --paper: #F5EFE1;
+    --panel: #ECE2CB;
+    --maroon: #7A1F2B;
+    --maroon-deep: #5C1620;
+    --gold: #A8792B;
+    --gold-soft: #C9A24B;
+    --line: #D9CBA9;
+    --focus: #2F5D8A;
+    --radius: 3px;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #EFE7D8;
+      --ink-soft: #C9BBA2;
+      --paper: #211B16;
+      --panel: #2B241D;
+      --maroon: #D9707E;
+      --maroon-deep: #E39BA5;
+      --gold: #D9B266;
+      --gold-soft: #E8CD8E;
+      --line: #4A3E2F;
+      --focus: #6FA3D8;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #EFE7D8;
+    --ink-soft: #C9BBA2;
+    --paper: #211B16;
+    --panel: #2B241D;
+    --maroon: #D9707E;
+    --maroon-deep: #E39BA5;
+    --gold: #D9B266;
+    --gold-soft: #E8CD8E;
+    --line: #4A3E2F;
+    --focus: #6FA3D8;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Work Sans', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  h1, h2, h3, .display {
+    font-family: 'Fraunces', Georgia, serif;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  a { color: var(--maroon); }
+  a:focus-visible, button:focus-visible, .card:focus-within {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .headbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 24px;
+    max-width: 1080px; margin: 0 auto;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand svg { width: 30px; height: 30px; flex: none; }
+  .brand span { font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--ink); font-weight: 500; }
+  nav.top { display: flex; gap: 28px; }
+  nav.top a { color: var(--ink-soft); text-decoration: none; font-size: 0.95rem; }
+  nav.top a:hover { color: var(--maroon); }
+  @media (max-width: 640px) { nav.top { display: none; } }
+
+  /* Hero */
+  .hero {
+    padding: 76px 0 64px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; padding: 48px 0 40px; text-align: left; }
+  }
+  .hero h1 {
+    font-size: clamp(2.1rem, 4.4vw, 3.2rem);
+    line-height: 1.12;
+  }
+  .hero .lede {
+    margin-top: 20px;
+    max-width: 46ch;
+    color: var(--ink-soft);
+    font-size: 1.08rem;
+  }
+  .hero .ctas { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 22px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-size: 0.98rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--maroon); color: #F5EFE1; }
+  .btn-primary:hover { background: var(--maroon-deep); }
+  .btn-ghost { border-color: var(--line); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--maroon); color: var(--maroon); }
+
+  .hero-art { display: flex; justify-content: center; }
+  .hero-art svg { width: 100%; max-width: 300px; height: auto; }
+
+  /* Trust strip */
+  .trust {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+  }
+  .trust .wrap {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    justify-content: space-between;
+    font-size: 0.88rem; color: var(--ink-soft);
+  }
+  .trust .item { display: flex; align-items: center; gap: 8px; }
+  .trust svg { width: 16px; height: 16px; flex: none; color: var(--gold); }
+
+  /* Section heading */
+  .section { padding: 64px 0; }
+  .section-head { max-width: 60ch; margin-bottom: 36px; }
+  .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+  .section-head p { color: var(--ink-soft); margin-top: 10px; }
+
+  /* Catalog */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+  }
+  .card .eyebrow { font-size: 0.82rem; color: var(--gold); margin-bottom: 6px; }
+  .card h3 { font-size: 1.28rem; margin-bottom: 8px; }
+  .card p.desc { color: var(--ink-soft); font-size: 0.96rem; flex-grow: 1; }
+  .price-row {
+    display: flex; align-items: baseline; gap: 10px;
+    margin: 16px 0 4px;
+    border-top: 1px dashed var(--line);
+    padding-top: 16px;
+  }
+  .price { font-family: 'Fraunces', serif; font-size: 1.3rem; }
+  .price-alt { color: var(--ink-soft); font-size: 0.9rem; }
+  .buy-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .buy-row .btn { padding: 10px 16px; font-size: 0.9rem; flex: 1; justify-content: center; }
+
+  /* About */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+  }
+  @media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-grid p { color: var(--ink-soft); }
+  .about-grid p + p { margin-top: 14px; }
+  .stat-list { display: grid; gap: 18px; }
+  .stat { border-left: 2px solid var(--gold); padding-left: 16px; }
+  .stat .num { font-family: 'Fraunces', serif; font-size: 1.6rem; color: var(--maroon); }
+  .stat .lab { color: var(--ink-soft); font-size: 0.9rem; }
+
+  /* FAQ */
+  details.faq {
+    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
+  }
+  details.faq summary {
+    cursor: pointer;
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    list-style: none;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  }
+  details.faq summary::-webkit-details-marker { display: none; }
+  details.faq summary::after {
+    content: "+";
+    font-family: 'Work Sans', sans-serif;
+    color: var(--maroon);
+    font-size: 1.3rem;
+    flex: none;
+  }
+  details.faq[open] summary::after { content: "\2212"; }
+  details.faq p { color: var(--ink-soft); margin-top: 10px; padding-right: 28px; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 60px;
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+  }
+  footer .foot-grid {
+    display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  }
+  footer a { color: var(--ink-soft); text-decoration: underline; }
+  footer .brandline { color: var(--ink); font-family: 'Fraunces', serif; margin-bottom: 6px; }
+  .note {
+    margin-top: 6px; font-size: 0.85rem; color: var(--ink-soft);
+  }
+  .config-flag {
+    background: #FFF3CD; color: #6B4E00; border: 1px solid #E0C15C;
+    border-radius: var(--radius); padding: 10px 14px; font-size: 0.85rem; margin-top: 10px;
+  }
+  :root[data-theme="dark"] .config-flag, @media (prefers-color-scheme: dark) {
+    .config-flag { background: #3A2E10; color: #E8CD8E; border-color: #6B5320; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="headbar">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-opacity="0.25"/>
+        <path d="M20 8c3 4 5 7 5 10.5A5 5 0 0 1 20 23.5 5 5 0 0 1 15 18.5C15 15 17 12 20 8Z" fill="none" stroke="#7A1F2B" stroke-width="1.6"/>
+        <path d="M12 26c3 3 5 4.5 8 4.5s5-1.5 8-4.5" stroke="#A8792B" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span>AI4Moksha</span>
+    </a>
+    <nav class="top">
+      <a href="#catalog">eBooks</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="wrap hero">
+    <div>
+      <h1>Ancient wisdom, in language you can actually read.</h1>
+      <p class="lede">AI4Moksha translates Hindu stotras, stutis and scriptures into clear, faithful English and Telugu — so the meaning behind the Sanskrit reaches you, not just the sound of it.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#catalog">Browse eBooks</a>
+        <a class="btn btn-ghost" href="#about">Our approach</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="110" cy="110" r="108" fill="#ECE2CB"/>
+        <g stroke="#A8792B" stroke-width="1.4" fill="none">
+          <circle cx="110" cy="110" r="86"/>
+          <circle cx="110" cy="110" r="66"/>
+        </g>
+        <path d="M110 44c14 18 22 32 22 46a22 22 0 0 1-44 0c0-14 8-28 22-46Z" fill="#7A1F2B"/>
+        <g stroke="#7A1F2B" stroke-width="2" stroke-linecap="round">
+          <path d="M60 150c16 14 32 20 50 20s34-6 50-20"/>
+        </g>
+        <g fill="#A8792B">
+          <circle cx="60" cy="150" r="3.5"/>
+          <circle cx="160" cy="150" r="3.5"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="trust">
+    <div class="wrap">
+      <div class="item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 6v6c0 5 4 9 9 10 5-1 9-5 9-10V6l-9-4Z"/></svg>
+        Secure checkout via Razorpay &amp; PayPal
+      </div>
+      <div class="item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 9h16"/></svg>
+        UPI, cards &amp; netbanking accepted
+      </div>
+      <div class="item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+        Instant download, no waiting
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="catalog">
+    <div class="section-head">
+      <h2>The eBooks</h2>
+      <p>Each title includes the original verses, transliteration, and a plain-language translation with context on when and why it's recited.</p>
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="eyebrow">Stotram · 12 pages</div>
+        <h3>Mahaganapathi Pancharatnam</h3>
+        <p class="desc">The five-gem hymn to Lord Ganesha by Adi Shankaracharya, with verse-by-verse meaning and the phala shruti explaining its benefits.</p>
+        <div class="price-row">
+          <span class="price">₹39</span>
+          <span class="price-alt">/ $1</span>
+        </div>
+        <div class="buy-row">
+          <a class="btn btn-primary" href="#" data-buy="upi-1">Buy with UPI</a>
+          <a class="btn btn-ghost" href="#" data-buy="usd-1">Buy with card ($)</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="eyebrow">Ashtakam · 14 pages</div>
+        <h3>Kalabhairavastakam</h3>
+        <p class="desc">Adi Shankaracharya's eight verses to Lord Kalabhairava, translated with notes on its role in overcoming fear and obstacles.</p>
+        <div class="price-row">
+          <span class="price">₹39</span>
+          <span class="price-alt">/ $1</span>
+        </div>
+        <div class="buy-row">
+          <a class="btn btn-primary" href="#" data-buy="upi-2">Buy with UPI</a>
+          <a class="btn btn-ghost" href="#" data-buy="usd-2">Buy with card ($)</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="eyebrow">Charitra · Story</div>
+        <h3>Prahlada Charitra</h3>
+        <p class="desc">The story of Prahlada, the young devotee whose unwavering faith in Lord Vishnu withstood every trial his father Hiranyakashipu placed before him.</p>
+        <div class="price-row">
+          <span class="price">₹99</span>
+          <span class="price-alt">/ $2.5</span>
+        </div>
+        <div class="buy-row">
+          <a class="btn btn-primary" href="#" data-buy="upi-3">Buy with UPI</a>
+          <a class="btn btn-ghost" href="#" data-buy="usd-3">Buy with card ($)</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="eyebrow">Biography · Life story</div>
+        <h3>Neem Karoli Baba Maharaj Ji</h3>
+        <p class="desc">The life and teachings of Neem Karoli Baba, the revered saint of Kainchi Dham, told through his miracles, wisdom, and the devotion he inspired.</p>
+        <div class="price-row">
+          <span class="price">₹99</span>
+          <span class="price-alt">/ $2.5</span>
+        </div>
+        <div class="buy-row">
+          <a class="btn btn-primary" href="#" data-buy="upi-4">Buy with UPI</a>
+          <a class="btn btn-ghost" href="#" data-buy="usd-4">Buy with card ($)</a>
+        </div>
+      </article>
+
+    </div>
+    <p class="config-flag">Sample titles and prices shown — replace with your own catalog and connect real payment links (see the checklist below the page).</p>
+  </section>
+
+  <section class="section wrap" id="about">
+    <div class="section-head">
+      <h2>Why AI4Moksha</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>Moksha — liberation — is regarded in Hindu philosophy as life's highest pursuit. Reaching it starts with understanding: knowing what a verse actually says, not just reciting its sound.</p>
+        <p>We use AI-assisted translation to produce a first accurate rendering of each scripture, then review it for meaning, tone and readability before publishing. The result is a translation faithful to the source, written in plain English or Telugu a first-time reader can follow.</p>
+        <p>Every title is delivered as an instant-download PDF you can read on your phone, tablet or computer — no app or account required.</p>
+      </div>
+      <div class="stat-list">
+        <div class="stat">
+          <div class="num">2</div>
+          <div class="lab">Languages available at launch — English and Telugu</div>
+        </div>
+        <div class="stat">
+          <div class="num">100%</div>
+          <div class="lab">Digital delivery — no shipping, available worldwide</div>
+        </div>
+        <div class="stat">
+          <div class="num">₹ / $</div>
+          <div class="lab">Priced for both Indian and international readers</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="faq">
+    <div class="section-head">
+      <h2>Questions before you buy</h2>
+    </div>
+
+    <details class="faq" open>
+      <summary>What format are the eBooks delivered in?</summary>
+      <p>Every title is delivered as an instant-download PDF, formatted for both phone and desktop reading, sent right after payment is confirmed.</p>
+    </details>
+    <details class="faq">
+      <summary>Which payment methods are accepted?</summary>
+      <p>Readers in India can pay by UPI, netbanking or Indian cards. International readers can pay by card or PayPal in USD.</p>
+    </details>
+    <details class="faq">
+      <summary>How are the translations made?</summary>
+      <p>Each translation starts with an AI-assisted first pass against the original Sanskrit or Telugu source text, then is reviewed for meaning and readability before publishing.</p>
+    </details>
+    <details class="faq">
+      <summary>Can I get a refund?</summary>
+      <p>[Replace with your own refund policy — e.g. digital products are generally non-refundable once downloaded, except in case of a technical delivery failure.]</p>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="brandline">AI4Moksha</div>
+      <div>Hindu scripture eBooks, translated for clarity.</div>
+      <div class="note">© <span id="year"></span> AI4Moksha. All rights reserved.</div>
+    </div>
+    <div id="contact">
+      <div>[Your Contact Email]</div>
+      <div><a href="#">Privacy Policy</a></div>
+      <div><a href="#">Refund Policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Placeholder buy-button wiring — see chat reply for how to connect real payment links.
+  document.querySelectorAll('[data-buy]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      alert('Payment link not yet connected for this button (' + el.getAttribute('data-buy') + '). Replace the href in the HTML with your real Razorpay Payment Page or PayPal.me link.');
+    });
+  });
+</script>
+
+</body>
+</html>
