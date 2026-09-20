@@ -364,7 +364,7 @@
         </div>
         <div class="buy-row">
           <a class="btn btn-primary" href="#" data-buy="upi-1">Buy with UPI</a>
-          <a class="btn btn-ghost" href="#" data-buy="usd-1">Buy with card ($)</a>
+          <a class="btn btn-ghost" href="https://paypal.me/kasinathupadhyayula/1USD" target="_blank" rel="noopener">Buy with card ($)</a>
         </div>
       </article>
 
@@ -378,7 +378,7 @@
         </div>
         <div class="buy-row">
           <a class="btn btn-primary" href="#" data-buy="upi-2">Buy with UPI</a>
-          <a class="btn btn-ghost" href="#" data-buy="usd-2">Buy with card ($)</a>
+          <a class="btn btn-ghost" href="https://paypal.me/kasinathupadhyayula/1USD" target="_blank" rel="noopener">Buy with card ($)</a>
         </div>
       </article>
 
@@ -392,7 +392,7 @@
         </div>
         <div class="buy-row">
           <a class="btn btn-primary" href="#" data-buy="upi-3">Buy with UPI</a>
-          <a class="btn btn-ghost" href="#" data-buy="usd-3">Buy with card ($)</a>
+          <a class="btn btn-ghost" href="https://paypal.me/kasinathupadhyayula/2.5USD" target="_blank" rel="noopener">Buy with card ($)</a>
         </div>
       </article>
 
@@ -406,7 +406,7 @@
         </div>
         <div class="buy-row">
           <a class="btn btn-primary" href="#" data-buy="upi-4">Buy with UPI</a>
-          <a class="btn btn-ghost" href="#" data-buy="usd-4">Buy with card ($)</a>
+          <a class="btn btn-ghost" href="https://paypal.me/kasinathupadhyayula/2.5USD" target="_blank" rel="noopener">Buy with card ($)</a>
         </div>
       </article>
 
@@ -575,13 +575,7 @@
     });
   });
 
-  // USD/card buttons — still placeholder until a PayPal link is connected
-  document.querySelectorAll('[data-buy^="usd-"]').forEach(function (el) {
-    el.addEventListener('click', function (e) {
-      e.preventDefault();
-      alert('USD payment link not yet connected for this button (' + el.getAttribute('data-buy') + '). This will be wired to PayPal.');
-    });
-  });
+  // USD/card buttons now link directly to PayPal.me — no JS handler needed
 </script>
 
 </body>
