@@ -486,6 +486,26 @@
 
   // Placeholder buy-button wiring — see chat reply for how to connect real payment links.
   // ==== Razorpay UPI checkout (uses backend to create a real order first) ====
+  function showDownloadBanner(book) {
+    var existing = document.getElementById('ai4m-download-banner');
+    if (existing) existing.remove();
+
+    var banner = document.createElement('div');
+    banner.id = 'ai4m-download-banner';
+    banner.style.cssText = 'position:fixed;inset:0;background:rgba(36,31,28,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+    banner.innerHTML =
+      '<div style="background:#F5EFE1;border-radius:6px;max-width:420px;width:100%;padding:32px;text-align:center;font-family:\'Work Sans\',sans-serif;">' +
+        '<div style="font-family:\'Fraunces\',serif;font-size:1.4rem;color:#241F1C;margin-bottom:10px;">Payment successful!</div>' +
+        '<p style="color:#55493F;margin-bottom:22px;">Your copy of \u201c' + book.name + '\u201d is ready.</p>' +
+        '<a href="' + book.drive + '" target="_blank" rel="noopener" style="display:inline-block;background:#7A1F2B;color:#F5EFE1;padding:13px 26px;border-radius:3px;text-decoration:none;font-weight:500;">Download your eBook</a>' +
+        '<div style="margin-top:16px;"><button id="ai4m-close-banner" style="background:none;border:none;color:#55493F;text-decoration:underline;cursor:pointer;font-size:0.9rem;">Close</button></div>' +
+      '</div>';
+    document.body.appendChild(banner);
+    document.getElementById('ai4m-close-banner').addEventListener('click', function () {
+      banner.remove();
+    });
+  }
+
   // SECURITY: only the public Key ID goes here. NEVER put your Key Secret in this file.
   var RAZORPAY_KEY_ID = "rzp_test_TdwCmASMbxvHSG"; // TODO: replace with your LIVE key once Razorpay activation is complete
   var CREATE_ORDER_URL = "https://ai4moksha-backend.vercel.app/api/create-order";
@@ -531,8 +551,7 @@
             name: "AI4Moksha",
             description: book.name,
             handler: function (response) {
-              alert("Payment successful! Opening your download link for \"" + book.name + "\".");
-              window.open(book.drive, "_blank");
+              showDownloadBanner(book);
             },
             modal: {
               ondismiss: function () {
