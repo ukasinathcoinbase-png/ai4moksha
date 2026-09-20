@@ -485,9 +485,10 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // Placeholder buy-button wiring — see chat reply for how to connect real payment links.
-  // ==== Razorpay UPI checkout (client-side, no backend needed) ====
+  // ==== Razorpay UPI checkout (uses backend to create a real order first) ====
   // SECURITY: only the public Key ID goes here. NEVER put your Key Secret in this file.
   var RAZORPAY_KEY_ID = "rzp_test_TdwCmASMbxvHSG"; // TODO: replace with your LIVE key once Razorpay activation is complete
+  var CREATE_ORDER_URL = "https://ai4moksha-backend.vercel.app/api/create-order";
 
   var EBOOKS = {
     "upi-1": { name: "Mahaganapathi Pancharatnam", amount: 3900,  drive: "https://drive.google.com/file/d/1vkAxwfbd7Usifl3js-tPwcHcuDtTct8h/view?usp=drive_link" },
@@ -499,31 +500,59 @@
   document.querySelectorAll('[data-buy^="upi-"]').forEach(function (el) {
     el.addEventListener('click', function (e) {
       e.preventDefault();
-      var book = EBOOKS[el.getAttribute('data-buy')];
+      var key = el.getAttribute('data-buy');
+      var book = EBOOKS[key];
       if (!book) return;
-      var options = {
-        key: RAZORPAY_KEY_ID,
-        amount: book.amount,          // amount in paise
-        currency: "INR",
-        name: "AI4Moksha",
-        description: book.name,
-        handler: function (response) {
-          // Payment succeeded — hand over the download link
-          alert("Payment successful! Opening your download link for \"" + book.name + "\".");
-          window.open(book.drive, "_blank");
-        },
-        modal: {
-          ondismiss: function () {
-            console.log("Checkout closed without completing payment.");
+
+      var originalText = el.textContent;
+      el.textContent = "Loading...";
+      el.style.pointerEvents = "none";
+
+      fetch(CREATE_ORDER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: book.amount, receipt: key })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          el.textContent = originalText;
+          el.style.pointerEvents = "auto";
+
+          if (!data.order_id) {
+            alert("Could not start checkout. Please try again in a moment.");
+            return;
           }
-        },
-        theme: { color: "#7A1F2B" }
-      };
-      var rzp = new Razorpay(options);
-      rzp.on('payment.failed', function (response) {
-        alert("Payment failed. Please try again or use a different payment method.");
-      });
-      rzp.open();
+
+          var options = {
+            key: RAZORPAY_KEY_ID,
+            amount: data.amount,
+            currency: data.currency,
+            order_id: data.order_id,
+            name: "AI4Moksha",
+            description: book.name,
+            handler: function (response) {
+              alert("Payment successful! Opening your download link for \"" + book.name + "\".");
+              window.open(book.drive, "_blank");
+            },
+            modal: {
+              ondismiss: function () {
+                console.log("Checkout closed without completing payment.");
+              }
+            },
+            theme: { color: "#7A1F2B" }
+          };
+          var rzp = new Razorpay(options);
+          rzp.on('payment.failed', function (response) {
+            alert("Payment failed. Please try again or use a different payment method.");
+          });
+          rzp.open();
+        })
+        .catch(function (err) {
+          el.textContent = originalText;
+          el.style.pointerEvents = "auto";
+          console.error(err);
+          alert("Could not connect to the payment server. Please try again shortly.");
+        });
     });
   });
 
