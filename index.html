@@ -649,22 +649,24 @@
   // SECURITY: only the public Key ID goes here. NEVER put your Key Secret in this file.
   var RAZORPAY_KEY_ID = "rzp_live_TeKYgPOSvfBTu0"; // LIVE key — real payments now
   var CREATE_ORDER_URL = "https://ai4moksha-backend.vercel.app/api/create-order";
+  var VERIFY_PAYMENT_URL = "https://ai4moksha-backend.vercel.app/api/verify-payment";
+  // Download links are kept on the backend and given out only after a verified payment.
 
   var EBOOKS = {
-    "upi-1": { name: "Mahaganapathi Pancharatnam", amount: 3900,  drive: "https://drive.google.com/file/d/1vkAxwfbd7Usifl3js-tPwcHcuDtTct8h/view?usp=drive_link" },
-    "upi-2": { name: "Kalabhairavastakam",          amount: 3900,  drive: "https://drive.google.com/file/d/1bugppldEtXZ6wgm6tSkTwgpcuS8EfdOw/view?usp=drive_link" },
-    "upi-3": { name: "Prahlada Charitra",           amount: 9900,  drive: "https://drive.google.com/file/d/1WYCdBH7i_KClK_la_hVy5XN1_Gn6kfa2/view?usp=drive_link" },
-    "upi-4": { name: "Neem Karoli Baba Maharaj Ji", amount: 9900,  drive: "https://drive.google.com/file/d/193hDjuSRC7-Fu0-8ftSIPCDcB3R69OlS/view?usp=drive_link" },
-    "upi-5": { name: "Chandrashekarastakam",        amount: 3900,  drive: "https://drive.google.com/file/d/1Y4LN1UYerxDZcTmRL1LhHjuIcbk7Zf-H/view?usp=sharing" },
-    "upi-6": { name: "Kaupina Panchakam",           amount: 3900,  drive: "https://drive.google.com/file/d/1lwPOzv5pR06PdT52voteA9y-tM3nMEsb/view?usp=sharing" },
-    "upi-7": { name: "Panchayudha Stotram",         amount: 3900,  drive: "https://drive.google.com/file/d/1_KHPHMENPqTDYEtToUNAimgeGmOymGQd/view?usp=sharing" },
-    "upi-8": { name: "Dakshinamurthy Stotram",      amount: 3900,  drive: "https://drive.google.com/file/d/1FPJ9aBwaXxqeOrKWu4w0r3q5mvuzIqvF/view?usp=sharing" },
-    "upi-9": { name: "Matru Panchakam",             amount: 3900,  drive: "https://drive.google.com/file/d/1HV7ledhfffM7weR1uKLDH2jn5XhXrdiD/view?usp=sharing" },
-    "upi-10": { name: "Shatpadi Stotram",           amount: 3900,  drive: "https://drive.google.com/file/d/1GKYNXCWov-QCIiiAEWdSarGM5Nzr_Vz5/view?usp=sharing" },
-    "upi-11": { name: "Nirvana Shatkam",            amount: 3900,  drive: "https://drive.google.com/file/d/1Bc1UcHml5knIbuG7Qo1EXvXkBvDXna15/view?usp=sharing" },
-    "upi-12": { name: "Siva Tandava Stotram",       amount: 3900,  drive: "https://drive.google.com/file/d/1jpxz0MoxOWZfZcZLGHtc4w4Xs6UJLtRG/view?usp=sharing" },
-    "upi-13": { name: "Sivananda Lahari",           amount: 9900,  drive: "https://drive.google.com/file/d/1T_aqziWguMthU_kFu7EWGb5tkf-sx0Hd/view?usp=sharing" },
-    "upi-14": { name: "Kanaka Dhara Stotram",       amount: 3900,  drive: "https://drive.google.com/file/d/19rSy1hzCOjKyQNNIb8OrLCAVmG3tF3lW/view?usp=sharing" }
+    "upi-1": { name: "Mahaganapathi Pancharatnam", amount: 3900 },
+    "upi-2": { name: "Kalabhairavastakam",          amount: 3900 },
+    "upi-3": { name: "Prahlada Charitra",           amount: 9900 },
+    "upi-4": { name: "Neem Karoli Baba Maharaj Ji", amount: 9900 },
+    "upi-5": { name: "Chandrashekarastakam",        amount: 3900 },
+    "upi-6": { name: "Kaupina Panchakam",           amount: 3900 },
+    "upi-7": { name: "Panchayudha Stotram",         amount: 3900 },
+    "upi-8": { name: "Dakshinamurthy Stotram",      amount: 3900 },
+    "upi-9": { name: "Matru Panchakam",             amount: 3900 },
+    "upi-10": { name: "Shatpadi Stotram",           amount: 3900 },
+    "upi-11": { name: "Nirvana Shatkam",            amount: 3900 },
+    "upi-12": { name: "Siva Tandava Stotram",       amount: 3900 },
+    "upi-13": { name: "Sivananda Lahari",           amount: 9900 },
+    "upi-14": { name: "Kanaka Dhara Stotram",       amount: 3900 }
   };
 
   document.querySelectorAll('[data-buy^="upi-"]').forEach(function (el) {
@@ -681,7 +683,7 @@
       fetch(CREATE_ORDER_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: book.amount, receipt: key })
+        body: JSON.stringify({ book: key })
       })
         .then(function (r) { return r.json(); })
         .then(function (data) {
@@ -701,7 +703,23 @@
             name: "AI4Moksha",
             description: book.name,
             handler: function (response) {
-              showDownloadBanner(book);
+              fetch(VERIFY_PAYMENT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(response)
+              })
+                .then(function (r) { return r.json(); })
+                .then(function (result) {
+                  if (!result.link) {
+                    alert((result.error || "We could not confirm your payment.") + "\nPayment id: " + response.razorpay_payment_id + "\nPlease email ai4moksha@gmail.com with this id and we will send your eBook.");
+                    return;
+                  }
+                  showDownloadBanner({ name: result.name, drive: result.link });
+                })
+                .catch(function (err) {
+                  console.error(err);
+                  alert("Your payment went through, but we could not load the download link.\nPayment id: " + response.razorpay_payment_id + "\nPlease email ai4moksha@gmail.com with this id and we will send your eBook.");
+                });
             },
             modal: {
               ondismiss: function () {
