@@ -675,7 +675,53 @@
       var key = el.getAttribute('data-buy');
       var book = EBOOKS[key];
       if (!book) return;
+      askEmail(book, function (email) { startCheckout(el, key, book, email); });
+    });
+  });
 
+  // Ask for an email before checkout, so the backend can email the download link.
+  // Razorpay's own form doesn't ask for it on this account.
+  function askEmail(book, done) {
+    var saved = "";
+    try { saved = localStorage.getItem('ai4m-email') || ""; } catch (err) {}
+
+    var box = document.createElement('div');
+    box.id = 'ai4m-email-box';
+    box.style.cssText = 'position:fixed;inset:0;background:rgba(36,31,28,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+    box.innerHTML =
+      '<form style="background:var(--paper);color:var(--ink);border-radius:6px;max-width:420px;width:100%;padding:28px;font-family:\'Work Sans\',sans-serif;">' +
+        '<div style="font-family:\'Fraunces\',serif;font-size:1.3rem;margin-bottom:8px;">Where should we send your eBook?</div>' +
+        '<p style="color:var(--ink-soft);margin:0 0 16px;font-size:0.95rem;">We\u2019ll email you the download link for \u201c' + book.name + '\u201d so you can download it again later.</p>' +
+        '<input type="email" id="ai4m-email" required placeholder="you@example.com" autocomplete="email" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid var(--line);border-radius:3px;background:var(--paper);color:var(--ink);font-size:1rem;margin-bottom:16px;">' +
+        '<button type="submit" style="width:100%;background:var(--maroon);color:var(--paper);border:none;padding:13px;border-radius:3px;font-weight:500;font-size:1rem;cursor:pointer;">Continue to payment</button>' +
+        '<div style="display:flex;justify-content:space-between;margin-top:14px;">' +
+          '<button type="button" id="ai4m-email-cancel" style="background:none;border:none;color:var(--ink-soft);text-decoration:underline;cursor:pointer;font-size:0.9rem;">Cancel</button>' +
+          '<button type="button" id="ai4m-email-skip" style="background:none;border:none;color:var(--ink-soft);text-decoration:underline;cursor:pointer;font-size:0.9rem;">Skip, pay without email</button>' +
+        '</div>' +
+      '</form>';
+    document.body.appendChild(box);
+
+    var input = document.getElementById('ai4m-email');
+    input.value = saved;
+    input.focus();
+
+    box.querySelector('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = input.value.trim();
+      try { localStorage.setItem('ai4m-email', email); } catch (err) {}
+      box.remove();
+      done(email);
+    });
+    document.getElementById('ai4m-email-skip').addEventListener('click', function () {
+      box.remove();
+      done("");
+    });
+    document.getElementById('ai4m-email-cancel').addEventListener('click', function () {
+      box.remove();
+    });
+  }
+
+  function startCheckout(el, key, book, email) {
       var originalText = el.textContent;
       el.textContent = "Loading...";
       el.style.pointerEvents = "none";
@@ -683,7 +729,7 @@
       fetch(CREATE_ORDER_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ book: key })
+        body: JSON.stringify({ book: key, email: email })
       })
         .then(function (r) { return r.json(); })
         .then(function (data) {
@@ -702,6 +748,7 @@
             order_id: data.order_id,
             name: "AI4Moksha",
             description: book.name,
+            prefill: email ? { email: email } : {},
             handler: function (response) {
               fetch(VERIFY_PAYMENT_URL, {
                 method: "POST",
@@ -740,8 +787,7 @@
           console.error(err);
           alert("Could not connect to the payment server. Please try again shortly.");
         });
-    });
-  });
+  }
 
   // USD/card buttons now link directly to PayPal.me — no JS handler needed
 </script>
